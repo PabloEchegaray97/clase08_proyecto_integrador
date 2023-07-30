@@ -6,28 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a href="/product" class="navbar-item">Lista</a>
+                <a href="/product" class="nav-link">List</a>
             </li>
             <li class="nav-item">
-                <a href="/product/create" class="navbar-item">Crear</a>
+                <a href="/product/create" class="nav-link">Create</a>
             </li>
             <li class="nav-item">
-                <a href="/chat" class="navbar-item">Chat</a>
+                <a href="/chat" class="nav-link">Chat</a>
             </li>
         </ul>
-
     </nav>
 
-    <img src="/public/logo.png" height="100">
-    <div class="container">
+    <div class="container mt-4">
         {{{ body }}}
     </div>
 

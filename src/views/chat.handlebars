@@ -1,16 +1,35 @@
-<h1>Chat</h1>
+<div class="container mt-4">
+    <h1>Chat</h1>
 
-<div>
-    <form action="/chat" method="POST" id="chatForm">
-        <i id="username">{{user}}</i><input id="chatbox">
-        <input type="submit" value="Enviar">
-    </form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <form action="/chat" method="POST" id="chatForm">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="username">{{user}}</span>
+                        </div>
+                        <input type="text" class="form-control" id="chatbox">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="logs" class="mt-4">
+        <div class="card">
+            <div class="card-body">
+                {{#each chats}}
+                <p class="mb-1"><strong>{{this.user}}</strong>: {{this.message}}</p>
+                {{/each}}
+            </div>
+        </div>
+    </div>
 </div>
-<div id="logs">
-    {{#each chats}}
-        <p><i>{{this.user}}</i>: {{this.message}}</p>
-    {{/each}}
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/public/js/index.js"></script>

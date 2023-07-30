@@ -1,10 +1,26 @@
-<h2>Create Product</h2>
+<div class="container mt-4">
+    <h2>Create Product</h2>
 
-<form action="/product/create" method="POST">
-    Name: <input name="name">
-    Photo: <input name="photo">
-    Price: <input type="number" name="price">
-    Id: <input type="number" name="id">
+    <form action="/product/create" method="POST" class="row">
+        <div class="form-group col-md-6">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="photo">Photo:</label>
+            <input type="text" class="form-control" id="photo" name="photo">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="price">Price:</label>
+            <input type="number" class="form-control" id="price" name="price">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="id">Id:</label>
+            <input type="number" class="form-control" id="id" name="id">
+        </div>
 
-    <input type="submit" value="Crear">
-</form>
+        <div class="form-group col-12">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+</div>

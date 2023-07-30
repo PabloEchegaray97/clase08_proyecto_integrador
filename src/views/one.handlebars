@@ -1,7 +1,10 @@
-<div>
-    <h2>{{name}}</h2>
-    <img src="{{photo}}" alt="">
-    Price: {{price}}
-    <hr>
-    <a href="/product/delete/{{_id}}">Borrar</a>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">{{name}}</h2>
+            <img src="{{photo}}" alt="{{name}}" class="img-fluid mb-3">
+            <p class="card-text">Price: {{price}}</p>
+            <a href="/product/delete/{{_id}}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
 </div>
