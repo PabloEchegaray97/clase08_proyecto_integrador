@@ -1,9 +1,11 @@
-<div class="container">
-    <div class="card">
-        <div class="card-body">
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card col-md-6">
+        <img src="{{photo}}" alt="{{name}}" class="card-img-top img-fluid rounded" style="object-fit: cover; height: 300px;">
+        <div class="card-body text-center">
             <h2 class="card-title">{{name}}</h2>
-            <img src="{{photo}}" alt="{{name}}" class="img-fluid mb-3">
-            <p class="card-text">Price: {{price}}</p>
+            <p class="card-text">
+                <strong>${{price}}</strong>
+            </p>
             <a href="/product/delete/{{_id}}" class="btn btn-danger">Delete</a>
         </div>
     </div>

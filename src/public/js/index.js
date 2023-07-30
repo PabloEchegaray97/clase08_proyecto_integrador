@@ -57,3 +57,4 @@ document.getElementById('chatForm').addEventListener('submit', (event) => {
         });
     }
 });
+

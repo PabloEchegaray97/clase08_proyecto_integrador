@@ -42,6 +42,19 @@ router.get('/:id', async (req, res) => {
 })
 
 
+router.put('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const productNew = req.body;
+        await productModel.findByIdAndUpdate(id, productNew);
+        res.redirect('/product/' + id);
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).send('Error updating product');
+    }
+});
+
+
 
 export default router
 

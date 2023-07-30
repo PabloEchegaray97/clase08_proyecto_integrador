@@ -5,8 +5,8 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     try {
-        const carts = await CartModel.find();
-        res.status(200).json(carts);
+        const carts = await CartModel.find().lean().exec();
+        res.render('carts', {carts})
     } catch (error) {
         console.error('Error fetching carts from the database:', error);
         res.status(500).send('Error fetching carts from the database');

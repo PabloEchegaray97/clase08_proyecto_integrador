@@ -1,0 +1,17 @@
+<h2 class="mb-4">Carts</h2>
+{{#each carts}}
+<div class="border rounded p-3 mb-3">
+    <h5>Cart ID: {{this._id}}</h5>
+    <div>
+        <span class="font-weight-bold">Content:</span>
+        <ul class="list-group">
+            {{#each this.products}}
+            <li class="list-group-item">
+                Product ID: <strong>{{this.id}}</strong>
+                Quantity: <strong>{{this.quantity}}</strong>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+{{/each}}
