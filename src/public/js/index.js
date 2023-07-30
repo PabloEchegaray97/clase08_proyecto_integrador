@@ -27,7 +27,7 @@ socket.on('logs', data => {
     const divLogs = document.getElementById('logs');
     let messages = '';
     data.forEach(message => {
-        messages += `<p><i>${message.user}</i>: ${message.message}</p>`;
+        messages += `<p class="mb-1"><strong>${message.user}</strong>: ${message.message}</p>`;
     });
 
     divLogs.innerHTML = messages;

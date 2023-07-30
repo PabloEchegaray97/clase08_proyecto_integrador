@@ -3,6 +3,7 @@ import handlebars from 'express-handlebars';
 import mongoose from 'mongoose';
 import productRouter from './routes/product.router.js';
 import chatRouter from './routes/chat.router.js';
+import cartRouter from './routes/cart.router.js'
 
 import { Server } from 'socket.io';
 import __dirname from './utils.js';
@@ -38,5 +39,5 @@ app.io = io;
 
 app.use('/product', productRouter);
 app.use('/chat', chatRouter);
-
+app.use('/carts', cartRouter)
 export default app;
