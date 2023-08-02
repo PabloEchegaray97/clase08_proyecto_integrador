@@ -11,10 +11,11 @@
                     <h5 class="card-title">{{this.name}}</h5>
                     <p class="card-text">{{this.type}}</p>
                     <a href="/product/{{this._id}}" class="btn btn-primary">View Details</a>
-                    <a href="/product/delete/{{this._id}}" class="btn btn-danger">Delete</a>
+                    <a href="/product/" onclick="deleteProduct('{{_id}}')" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
     </div>
     {{/each}}
 </div>
+<script src="/public/js/products.js"></script>

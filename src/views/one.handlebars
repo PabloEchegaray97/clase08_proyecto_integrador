@@ -6,7 +6,9 @@
             <p class="card-text">
                 <strong>${{price}}</strong>
             </p>
-            <a href="/product/delete/{{_id}}" class="btn btn-danger">Delete</a>
+            <a href="/product/" onclick="deleteProduct('{{_id}}')" class="btn btn-danger">Delete</a>
         </div>
     </div>
 </div>
+
+<script src="/public/js/products.js"></script>

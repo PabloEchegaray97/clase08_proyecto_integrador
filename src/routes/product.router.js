@@ -27,7 +27,7 @@ router.post('/create', async (req, res) => {
     res.redirect('/product/' + productGenerated._id)
 })
 
-router.get('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     const id = req.params.id
 
     await productModel.deleteOne({ _id: id })
