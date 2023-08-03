@@ -1,5 +1,5 @@
 function deleteProduct(productId) {
-    fetch(`/product/delete/${productId}`, {
+    fetch(`/product/${productId}`, {
         method: 'DELETE'
     })
     .then(response => {
