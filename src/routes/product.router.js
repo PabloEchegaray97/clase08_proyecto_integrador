@@ -5,8 +5,20 @@ const router = Router()
 
 
 router.get('/', async (req, res) => {
-    const products = await productModel.find().lean().exec()
-    res.render('list', { products })
+    //const products = await productModel.find().lean().exec()
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+    const result = await productModel.paginate({}, {
+        page,
+        limit,
+        lean: true
+    })
+    result.prevLink = result.hasPrevPage ? `/product/?page=${result.prevPage}&limit=${limit}` : ''
+    result.nextLink = result.hasNextPage ? `/product/?page=${result.nextPage}&limit=${limit}` : ''
+    console.log(result);
+    
+    res.render('list', result )
+
 })
 
 router.get('/create', async (req, res) => {
@@ -36,7 +48,7 @@ router.delete('/delete/:id', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id
-    const product = await productModel.findById({_id: id})
+    const product = await productModel.findById({ _id: id })
     console.log(product);
     res.render('one', product)
 })

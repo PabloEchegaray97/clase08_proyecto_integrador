@@ -1,6 +1,6 @@
 <h2 class="mb-4">Products</h2>
 <div class="container">
-    {{#each products}}
+    {{#each docs}}
     <div class="card mb-3">
         <div class="row no-gutters">
             <div class="col-md-4">
@@ -17,5 +17,13 @@
         </div>
     </div>
     {{/each}}
+    <div class="d-flex justify-content-center mt-4">
+        {{#if hasPrevPage}}
+            <a href="{{prevLink}}" class="btn btn-secondary mx-1">atras</a>
+        {{/if}}
+        {{#if hasNextPage}}
+            <a href="{{nextLink}}" class="btn btn-secondary mx-1">siguiente</a>
+        {{/if}}
+    </div>
 </div>
 <script src="/public/js/products.js"></script>
