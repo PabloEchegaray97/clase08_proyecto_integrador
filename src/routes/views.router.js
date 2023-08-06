@@ -9,6 +9,7 @@ router.get('/create-product', async (req, res) => {
 
 router.get('/products', async (req, res) => {
     const result = await cloudProductManager.listProducts(req);
+    const {sort, price} = req.query
     res.render('list', result );
 
 })
