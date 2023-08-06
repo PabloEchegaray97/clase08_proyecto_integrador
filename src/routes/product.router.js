@@ -6,7 +6,7 @@ const router = Router()
 
 router.post('/', async (req, res) => {
     const productGenerated = await cloudProductManager.createProduct(req);
-    res.redirect('/product/' + productGenerated._id)
+    res.redirect('/product-detail/' + productGenerated._id)
 })
 
 router.delete('/:id', async (req, res) => {

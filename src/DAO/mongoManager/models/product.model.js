@@ -5,7 +5,7 @@ const productCollection = 'products'
 
 const productSchema = new mongoose.Schema({
     name: String,
-    price: String,
+    price: Number,
     photo: String,
     id: Number
 })

@@ -9,7 +9,7 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">{{this.name}}</h5>
-                    <p class="card-text">{{this.type}}</p>
+                    <p class="card-text">${{this.price}}</p>
                     <a href="/product-detail/{{this._id}}" class="btn btn-primary">View Details</a>
                     <a href="/products/" onclick="deleteProduct('{{_id}}')" class="btn btn-danger">Delete</a>
                 </div>
