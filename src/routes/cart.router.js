@@ -20,14 +20,15 @@ router.get('/:cartId/products/:productId', async (req, res) => {
         const productId = req.params.productId;
         const quantity = req.query.quantity || 1;
 
-        let cart = await CartModel.findById(cartId);
+        let cart = await CartModel.findById(cartId).populate('products.product');
         const productIndex = cart.products.findIndex(
-            (product) => product.id === productId
+            (product) => product.product._id.toString() === productId
         );
+
         if (productIndex !== -1) {
             cart.products[productIndex].quantity += quantity;
         } else {
-            cart.products.push({ id: productId, quantity });
+            cart.products.push({ product: productId, quantity: quantity });
         }
 
         cart = await cart.save();
@@ -38,6 +39,7 @@ router.get('/:cartId/products/:productId', async (req, res) => {
         res.status(500).send('Error adding product to cart');
     }
 });
+
 
 router.delete('/:cartId/products/:productId', async (req, res) => {
     try {

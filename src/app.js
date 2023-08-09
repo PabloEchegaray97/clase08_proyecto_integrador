@@ -9,6 +9,7 @@ import viewsRouter from './routes/views.router.js'
 import { Server } from 'socket.io';
 import __dirname from './utils.js';
 import productModel from './DAO/mongoManager/models/product.model.js';
+import cartModel from './DAO/mongoManager/models/cart.model.js';
 
 const app = express();
 const httpServer = app.listen(8080, () => console.log('Listening on 8080'));
@@ -43,6 +44,7 @@ app.use('/product', productRouter);
 app.use('/chat', chatRouter);
 app.use('/carts', cartRouter)
 app.use('/', viewsRouter)
-
+const carts = await cartModel.find();
+console.log(JSON.stringify(carts, null, '\t'))
 
 export default app;
