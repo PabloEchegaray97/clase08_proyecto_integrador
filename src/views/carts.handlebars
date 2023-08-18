@@ -7,7 +7,9 @@
         <ul class="list-group">
             {{#each this.products}}
             <li class="list-group-item">
-                Product ID: <strong>{{this.id}}</strong>
+                Product ID: <strong>{{this.product.id}}</strong> <br>
+                <strong>{{this.product.name}}</strong>
+                Price: <strong>{{this.product.price}}</strong> <br>
                 Quantity: <strong>{{this.quantity}}</strong>
             </li>
             {{/each}}
