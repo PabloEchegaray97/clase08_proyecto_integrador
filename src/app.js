@@ -5,6 +5,11 @@ import productRouter from './routes/product.router.js';
 import chatRouter from './routes/chat.router.js';
 import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
+//
+import sessionRouter from './routes/session.router.js'
+import MongoStore from 'connect-mongo'
+import session from 'express-session'
+
 
 import { Server } from 'socket.io';
 import __dirname from './utils.js';
@@ -24,8 +29,26 @@ app.set('view engine', 'handlebars');
 
 app.use('/public', express.static(__dirname + '/public'));
 
-mongoose.set('strictQuery', false);
 const URL = "mongodb+srv://pae:crud1234@cluster0.qu1kfps.mongodb.net/";
+app.use(session({
+  store: MongoStore.create({
+      mongoUrl: URL,
+      dbName: 'ecommerce-clase8',
+      mongoOptions: {
+          useNewUrlParser:true,
+          useUnifiedTopology:true
+      },
+      ttl: 100
+  }),
+  secret: 'secret',
+  resave: true,
+  saveUninitialized:true
+}))
+
+
+
+
+mongoose.set('strictQuery', false);
 
 mongoose.connect(URL, {
   dbName: 'ecommerce-clase8'
@@ -42,7 +65,11 @@ app.io = io;
 
 app.use('/product', productRouter);
 app.use('/chat', chatRouter);
-app.use('/carts', cartRouter)
+app.use('/cart', cartRouter)
+app.get('/health', (req,res) => {
+  res.send('<h1>OK</h1>')
+})
+app.use('/api/session', sessionRouter)
 app.use('/', viewsRouter)
 const carts = await cartModel.find();
 console.log(JSON.stringify(carts, null, '\t'))

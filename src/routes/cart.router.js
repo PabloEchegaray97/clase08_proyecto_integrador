@@ -1,18 +1,7 @@
 import { Router } from 'express';
 import CartModel from '../DAO/mongoManager/models/cart.model.js';
-import cartModel from '../DAO/mongoManager/models/cart.model.js';
 
 const router = Router();
-
-router.get('/', async (req, res) => {
-    try {
-        const carts = await CartModel.find().lean().exec();
-        res.render('carts', { carts })
-    } catch (error) {
-        console.error('Error fetching carts from the database:', error);
-        res.status(500).send('Error fetching carts from the database');
-    }
-});
 
 router.get('/:cartId/products/:productId', async (req, res) => {
     try {
@@ -77,7 +66,7 @@ router.put('/:cartId', async (req, res) => {
     try {
         const cartId = req.params.cartId;
         const updatedCart = req.body;
-        let cart = await cartModel.findById(cartId);
+        let cart = await CartModel.findById(cartId);
         if (!cart) {
             return res.status(404).send('Cart not found');
         }
