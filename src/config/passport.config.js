@@ -34,9 +34,6 @@ const initializePassport = () => {
                     first_name: profile._json.name,
                     email: profile._json.email,
                     password: '',
-                    age: 0,
-                    last_name: '',
-                    role: ''
                 }
                 const result = await UserModel.create(newUser)
                 return done(null, result)
