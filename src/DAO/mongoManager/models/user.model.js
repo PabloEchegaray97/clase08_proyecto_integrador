@@ -5,7 +5,8 @@ const UserModel = mongoose.model('users', new mongoose.Schema({
     last_name : String,
     email : String,
     age: Number,
-    password: String
+    password: String,
+    role: String
 }))
 
 export default UserModel;
