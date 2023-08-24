@@ -18,7 +18,7 @@ const initializePassport = () => {
         {
             clientID: 'Iv1.9ab4ba689e8ec607',
             clientSecret: '02e811b889132c78baf0d4cd0662be09dd3d0bed',
-            callbackURL: 'http://127.0.0.1:8080/githubcallback'
+            callbackURL: 'http://localhost:8080/api/session/ghcallback'
         },
         async (accessToken, refreshToken, profile, done) => {
             console.log(profile)
@@ -26,7 +26,7 @@ const initializePassport = () => {
             try {
                 const user = await UserModel.findOne({ email: profile._json.email })
                 if (user) {
-                    console.log('User already exits ' + email)
+                    console.log('User already exits ' + profile._json.email)
                     return done(null, user)
                 }
 

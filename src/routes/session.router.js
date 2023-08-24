@@ -42,7 +42,7 @@ router.get(
 )
 
 router.get(
-    '/githubcallback',
+    '/ghcallback',
     passport.authenticate('github', { failureRedirect: '/'}),
     async(req, res) => {
         console.log('Callback: ', req.user)
