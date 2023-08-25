@@ -43,11 +43,13 @@ app.use(session({
           useNewUrlParser:true,
           useUnifiedTopology:true
       },
-      ttl: 100
   }),
   secret: 'secret',
   resave: true,
-  saveUninitialized:true
+  saveUninitialized:true,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // 24 horas
+}
 }))
 
 // Passport

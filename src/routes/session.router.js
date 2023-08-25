@@ -51,4 +51,14 @@ router.get(
         res.redirect('/profile')
     }
 )
+
+function auth(req, res, next) {
+    if(req.session?.user.role == 'admin') return next()
+    return res.status(401).send('No tienes acceso a esta pagina')
+}
+
+router.get('/admin', auth, (req,res) => {
+    res.send('Esto solo lo puede ver un usuario que sea administrador')
+    console.log(req.session.user.role);
+})
 export default router
