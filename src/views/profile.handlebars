@@ -6,9 +6,27 @@
                     <h1 class="h3">Profile</h1>
                 </div>
                 <div class="card-body">
+                    {{#if role}}
+                    <p class="mb-1 text-right" style="font-size: 12px; color: gray;">{{role}}</p>
+
+                    {{/if}}
+                    {{#unless last_name}}
+                    <p class="mb-1 text-right" style="font-size: 12px; color: gray;">Logged from GitHub</p>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <label class="font-weight-bold">Full name:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <p class="mb-0">{{first_name}}</p>
+                        </div>
+                    </div>
+                    {{/unless}}
+
+                    {{#if last_name}}
                     <div class="row">
                         <div class="col-md-4">
-                            <label class="font-weight-bold">First Name:</label>
+                            <label class="font-weight-bold">First name:</label>
                         </div>
                         <div class="col-md-8">
                             <p class="mb-0">{{first_name}}</p>
@@ -22,6 +40,8 @@
                             <p class="mb-0">{{last_name}}</p>
                         </div>
                     </div>
+                    {{/if}}
+                    {{#if age}}
                     <div class="row">
                         <div class="col-md-4">
                             <label class="font-weight-bold">Age:</label>
@@ -30,6 +50,7 @@
                             <p class="mb-0">{{age}}</p>
                         </div>
                     </div>
+                    {{/if}}
                     <div class="row">
                         <div class="col-md-4">
                             <label class="font-weight-bold">Email:</label>
