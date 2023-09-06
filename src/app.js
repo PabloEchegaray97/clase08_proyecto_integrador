@@ -16,10 +16,12 @@ import __dirname from './utils.js';
 import productModel from './DAO/mongoManager/models/product.model.js';
 import cartModel from './DAO/mongoManager/models/cart.model.js';
 //
-import jwtRouter from './routes/jwt.router.js'
 import passport from 'passport'
 import initializePassport from './config/passport.config.js'
-
+//
+import cookieParser from 'cookie-parser'
+import jwtRouter from './routes/jwt.router.js'
+//
 
 const app = express();
 const httpServer = app.listen(8080, () => console.log('Listening on 8080'));
@@ -56,6 +58,8 @@ app.use(session({
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(cookieParser());
 
 
 mongoose.set('strictQuery', false);

@@ -3,17 +3,46 @@ import local from 'passport-local'
 import UserModel from "../DAO/mongoManager/models/user.model.js";
 import GitHubStrategy from 'passport-github2'
 import { createHash, isValidPassword } from "../utils.js";
+//
+import jwt from 'passport-jwt'
 
 /**
 App ID: 379133
 Client ID: Iv1.9ab4ba689e8ec607
 Secret: 02e811b889132c78baf0d4cd0662be09dd3d0bed
  */
-
 const LocalStrategy = local.Strategy
+//
+const JWTStrategy = jwt.Strategy // La estrategia de JWT
+const ExtractJWT = jwt.ExtractJwt // La funcion de extraccion
 
+const cookieExtractor = req => {
+    const token = (req?.cookies) ? req.cookies['coderCookie'] : null
+
+    console.log('COOKIE EXTRACTOR: ', token)
+    return token
+}
+//
 const initializePassport = () => {
 
+    //jwt
+    passport.use(
+        'jwt',
+        new JWTStrategy(
+            {
+                jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+                secretOrKey: 'coderTokenForJWT'
+            },
+            async (jwt_payload, done) => {
+
+                try {
+                    return done(null, jwt_payload)
+                } catch (e) {
+                    return done(e)
+                }
+            })
+    )
+    //
     passport.use('github', new GitHubStrategy(
         {
             clientID: 'Iv1.9ab4ba689e8ec607',

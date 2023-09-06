@@ -1,23 +1,61 @@
 import { Router } from "express";
-import { generateToken, authToken } from "../utils.js";
-
-const usersDB = []
+import { generateToken, authToken, passportCall, authorization } from "../utils.js";
+import UserModel from "../DAO/mongoManager/models/user.model.js";
+const usersDB = [
+    {
+        email: 'dario@gmail.com',
+        password: '123456',
+        name: 'Dario',
+        role: 'user'
+    },
+    {
+        email: 'noah@gmail.com',
+        password: '123456',
+        name: 'Noah Brisa',
+        role: 'seller'
+    },
+]
 const router = Router()
 
 router.post('/register', (req, res) => {
     const user = req.body
 
-    if( usersDB.find(u => u.email === user.email)) {
+    if (usersDB.find(u => u.email === user.email)) {
         return res.status(400).send('User already exits')
     }
 
     usersDB.push(user)
     const access_token = generateToken(user)
 
-    res.send({status: 'success', access_token })
+    res.cookie('coderCookie', access_token, {
+        maxAge: 60 * 60 * 1000,
+        httpOnly: true
+    }).send({ message: 'Logged In!' })
 })
 
-router.get('/current', authToken, (req, res) => {
+router.post('/login', async  (req, res) => {
+    const { email, password } = req.body
+
+    const user = await UserModel.findOne({ email, password }).lean().exec()
+    console.log(user);
+    if (!user) return res.status(401).send({ status: "error", error: 'Invalid pass' })
+
+    const access_token = generateToken(user)
+
+    res.cookie('coderCookie', access_token, {
+        maxAge: 60 * 60 * 1000,
+        httpOnly: true
+    }).send({ message: 'Logged In!' })
+
+})
+
+router.get('/everyone', passportCall('jwt'), (req, res) => {
+    console.log('Path /everyone')
+    res.send({ status: 'success', payload: req.user })
+})
+
+router.get('/current', passportCall('jwt'), authorization('user'), (req, res) => {
+    console.log('Path /current')
     res.send({ status: 'success', payload: req.user })
 })
 

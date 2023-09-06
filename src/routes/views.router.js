@@ -56,4 +56,14 @@ router.get('/profile', auth, (req, res) => {
     const user = req.session.user
     res.render('profile', user)
 })
+
+router.get('/login', (req, res) => {
+    res.render('login-jwt', {})
+})
+
+router.get('/home', (req, res) => {
+    res.render('home', {})
+})
+
+
 export default router;
