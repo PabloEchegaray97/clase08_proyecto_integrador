@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import cloudProductManager from '../DAO/mongoManager/controllers/product.manager.js';
 import CartModel from '../DAO/mongoManager/models/cart.model.js';
-
+import { passportCall } from '../utils.js';
 const router = Router();
 
 router.get('/create-product', async (req, res) => {
@@ -47,13 +47,9 @@ router.get('/register', (req, res) => {
 });
 
 
-function auth(req, res, next) {
-    if(req.session?.user) return next()
-    res.redirect('/')
-}
-
-router.get('/profile', auth, (req, res) => {
-    const user = req.session.user
+router.get('/profile', passportCall('jwt'), (req, res) => {
+    const user = req.user.user;
+    console.log(user.user);
     res.render('profile', user)
 })
 

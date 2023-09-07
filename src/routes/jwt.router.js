@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { generateToken, authToken, passportCall, authorization } from "../utils.js";
+import { generateToken, authToken, passportCall, authorization, isValidPassword } from "../utils.js";
 import UserModel from "../DAO/mongoManager/models/user.model.js";
 const usersDB = [
     {
@@ -36,17 +36,20 @@ router.post('/register', (req, res) => {
 router.post('/login', async  (req, res) => {
     const { email, password } = req.body
 
-    const user = await UserModel.findOne({ email, password }).lean().exec()
+    const user = await UserModel.findOne({ email}).lean().exec()
     console.log(user);
     if (!user) return res.status(401).send({ status: "error", error: 'Invalid pass' })
-
+    
+    const result = isValidPassword(user, password)
+    if(!result) {
+        return res.status(404).send('Invalid credentials')
+    }
     const access_token = generateToken(user)
 
     res.cookie('coderCookie', access_token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true
-    }).send({ message: 'Logged In!' })
-
+    }).redirect('/profile')
 })
 
 router.get('/everyone', passportCall('jwt'), (req, res) => {

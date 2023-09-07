@@ -1,25 +1,24 @@
-<form id='form'>
-    Email: <input name="email" id="email" type="text"><br>
-    Pass: <input name="password" id="password" type="text"><br>
-    <hr>
-    <button type="submit">Login</button>
-</form>
-
-<script>
-    document.getElementById('form').onsubmit = e => {
-        e.preventDefault()
-
-        const email = document.getElementById('email').value
-        const password = document.getElementById('password').value
-
-        fetch('/jwt/login', {
-            method: 'POST',
-            body: JSON.stringify({ email, password}),
-            headers: {'Content-Type': 'application/json'}
-        })
-            .then(r => r.json())
-            .then(data => {
-                console.log(data)
-            })
-    }
-</script>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
+                    <form action="/jwt/login" method="post" id="form">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="submit">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

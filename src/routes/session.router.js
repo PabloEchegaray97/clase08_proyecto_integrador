@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import UserModel from './../DAO/mongoManager/models/user.model.js';
 import passport from "passport";
-import { createHash, isValidPassword } from "../utils.js";
+import { createHash, isValidPassword, generateToken } from "../utils.js";
 
 const router = Router();
 
@@ -44,11 +44,16 @@ router.get(
 router.get(
     '/ghcallback',
     passport.authenticate('github', { failureRedirect: '/'}),
-    async(req, res) => {
-        console.log('Callback: ', req.user)
-        req.session.user = req.user
-        console.log(req.session)
-        res.redirect('/profile')
+    async (req, res) => {
+        if (!req.user) {
+            return res.status(401).send('Authentication failed');
+        }
+        const jwtToken = generateToken(req.user);
+        res.cookie('coderCookie', jwtToken, {
+            maxAge: 24 * 60 * 60 * 1000, // 24 horas
+            httpOnly: true,
+        });
+        res.redirect('/profile');
     }
 )
 

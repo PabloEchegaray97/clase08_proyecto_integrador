@@ -103,29 +103,6 @@ const initializePassport = () => {
         }
     ))
 
-    // login Es el nomber para IniciarSesion con Local
-    passport.use('login', new LocalStrategy(
-        { usernameField: 'email' },
-        async (username, password, done) => {
-            try {
-                const user = await UserModel.findOne({ email: username }).lean().exec()
-                if (!user) {
-                    console.error('User doesnt exist')
-                    return done(null, false)
-                }
-
-                if (!isValidPassword(user, password)) {
-                    console.error('Password not valid')
-                    return done(null, false)
-                }
-
-                return done(null, user)
-            } catch (e) {
-                return done('Error login ' + error)
-            }
-        }
-    ))
-
     passport.serializeUser((user, done) => {
         done(null, user._id)
     })
