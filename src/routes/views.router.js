@@ -47,11 +47,28 @@ router.get('/register', (req, res) => {
 });
 
 
-router.get('/profile', passportCall('jwt'), (req, res) => {
+router.get('/profile', (req, res, next) => {
+    const cookie = req.cookies['coderCookie'];
+
+    if (!cookie) {
+        return res.redirect('/login'); // Redirige a la página de inicio de sesión si no hay cookie
+    }
+
+    // Verifica la cookie y realiza la lógica JWT aquí, si es necesario.
+    // Puedes utilizar passportCall('jwt') u otras lógicas de verificación que necesites.
+    passportCall('jwt')(req, res, (err) => {
+        if (err) {
+            return res.redirect('/login'); // Redirige si la verificación JWT falla
+        }
+        // Si todo está en orden, pasa al siguiente middleware o controlador.
+        next();
+    });
+}, (req, res) => {
+    // Lógica para la página de perfil aquí.
+    // Esta parte solo se ejecutará si la cookie es válida y el JWT es válido.
     const user = req.user.user;
-    console.log(user.user);
-    res.render('profile', user)
-})
+    res.render('profile', user);
+});
 
 router.get('/login', (req, res) => {
     res.render('login-jwt', {})
