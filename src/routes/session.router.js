@@ -5,16 +5,6 @@ import { createHash, isValidPassword, generateToken } from "../utils.js";
 
 const router = Router();
 
-// Iniciar Session
-router.post('/login', passport.authenticate('login', '/login'), async (req, res) => {
-
-    if (!req.user) return res.status(400).send('Invalid Credentials')
-    req.session.user = req.user
-
-    return res.redirect('/profile')
-})
-
-
 // Registro
 router.post(
     '/register',

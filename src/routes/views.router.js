@@ -30,29 +30,28 @@ router.get('/carts', async (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    if (req.session?.user) {
-        res.redirect('/profile');
-    } else {
-        res.render('login');
+    const cookie = req.cookies['coderCookie']
+    if (cookie) {
+        return res.redirect('/profile')
     }
-});
+    res.redirect('/login')
+})
+
+router.get('/login', (req,res) => {
+    res.render('login-jwt')
+})
 
 router.get('/register', (req, res) => {
-    if (req.session?.user) {
-        res.redirect('/profile');
-    } else {
-        res.render('register');
-    }
+    res.render('register')
 });
 
 router.get('/profile', (req, res, next) => {
     const cookie = req.cookies['coderCookie'];
 
     if (!cookie) {
-        return res.redirect('/login'); // Redirige a la página de inicio de sesión si no hay cookie
+        return res.redirect('/login');
     }
-
-    // Verifica la cookie y realiza la lógica JWT aquí, si es necesario.
+    // Verifica la cookie y realiza la lógica JWT
     passportCall('jwt')(req, res, (err) => {
         if (err) {
             return res.redirect('/login'); // Redirige si la verificación JWT falla
@@ -65,14 +64,6 @@ router.get('/profile', (req, res, next) => {
     const user = req.user.user;
     res.render('profile', user);
 });
-
-router.get('/login', (req, res) => {
-    res.render('login-jwt', {})
-})
-
-router.get('/home', (req, res) => {
-    res.render('home', {})
-})
 
 
 export default router;
