@@ -5,6 +5,9 @@ import GitHubStrategy from 'passport-github2'
 import { createHash, isValidPassword } from "../utils.js";
 //
 import jwt from 'passport-jwt'
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 /**
 App ID: 379133
@@ -23,6 +26,7 @@ const cookieExtractor = req => {
     return token
 }
 //
+
 const initializePassport = () => {
 
     //jwt

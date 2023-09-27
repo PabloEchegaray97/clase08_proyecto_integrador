@@ -5,26 +5,21 @@ import productRouter from './routes/product.router.js';
 import chatRouter from './routes/chat.router.js';
 import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
-//
 import sessionRouter from './routes/session.router.js'
 import MongoStore from 'connect-mongo'
 import session from 'express-session'
-
-
 import { Server } from 'socket.io';
 import __dirname from './utils.js';
 import productModel from './DAO/mongoManager/models/product.model.js';
 import cartModel from './DAO/mongoManager/models/cart.model.js';
-//
 import passport from 'passport'
 import initializePassport from './config/passport.config.js'
-//
+import config from './config/config.js'
 import cookieParser from 'cookie-parser'
 import jwtRouter from './routes/jwt.router.js'
-//
 
 const app = express();
-const httpServer = app.listen(8080, () => console.log('Listening on 8080'));
+const httpServer = app.listen(config.port, () => console.log('Listening on 8080'));
 const io = new Server(httpServer);
 
 app.use(express.json());
@@ -36,10 +31,10 @@ app.set('view engine', 'handlebars');
 
 app.use('/public', express.static(__dirname + '/public'));
 
-const URL = "mongodb+srv://pae:crud1234@cluster0.qu1kfps.mongodb.net/";
+
 app.use(session({
   store: MongoStore.create({
-      mongoUrl: URL,
+      mongoUrl: config.dbUrl,
       dbName: 'ecommerce-clase8',
       mongoOptions: {
           useNewUrlParser:true,
@@ -64,8 +59,8 @@ app.use(cookieParser());
 
 mongoose.set('strictQuery', false);
 
-mongoose.connect(URL, {
-  dbName: 'ecommerce-clase8'
+mongoose.connect(config.dbUrl, {
+  dbName: config.dbName
 })
   .then(() => {
     console.log('DB connected!!');
