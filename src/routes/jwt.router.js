@@ -57,9 +57,12 @@ router.get('/everyone', passportCall('jwt'), (req, res) => {
     res.send({ status: 'success', payload: req.user })
 })
 
-router.get('/current', passportCall('jwt'), authorization('user'), (req, res) => {
-    console.log('Path /current')
-    res.send({ status: 'success', payload: req.user })
+router.get('/admin', passportCall('jwt'), authorization('admin'), async (req, res) => {
+    const user = req.user.user
+    console.log(user);
+    const users = await UserModel.find().lean().exec()
+    console.log(users);
+    res.render('admin', { users, user }) // Pasamos un objeto con la propiedad "users"
 })
 
 export default router
