@@ -1,5 +1,4 @@
 import {Router} from 'express';
-import UserModel from './../DAO/mongoManager/models/user.model.js';
 import passport from "passport";
 import { createHash, isValidPassword, generateToken } from "../utils.js";
 

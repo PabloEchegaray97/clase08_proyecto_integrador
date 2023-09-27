@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { generateToken, authToken, passportCall, authorization, isValidPassword } from "../utils.js";
-import UserModel from "../DAO/mongoManager/models/user.model.js";
+import UserModel from "../DAO/mongo/models/user.model.js";
 const usersDB = [
     {
         email: 'dario@gmail.com',

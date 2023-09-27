@@ -10,13 +10,16 @@ import MongoStore from 'connect-mongo'
 import session from 'express-session'
 import { Server } from 'socket.io';
 import __dirname from './utils.js';
-import productModel from './DAO/mongoManager/models/product.model.js';
-import cartModel from './DAO/mongoManager/models/cart.model.js';
+
+import cartModel from './DAO/mongo/models/cart.model.js';
 import passport from 'passport'
 import initializePassport from './config/passport.config.js'
 import config from './config/config.js'
 import cookieParser from 'cookie-parser'
 import jwtRouter from './routes/jwt.router.js'
+//test
+
+import productsRouter from './routes/products.router.js'
 
 const app = express();
 const httpServer = app.listen(config.port, () => console.log('Listening on 8080'));
@@ -73,6 +76,7 @@ mongoose.connect(config.dbUrl, {
 app.io = io;
 
 app.use('/product', productRouter);
+
 app.use('/chat', chatRouter);
 app.use('/cart', cartRouter)
 app.use('/jwt', jwtRouter)

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import cloudProductManager from '../DAO/mongoManager/controllers/product.manager.js';
-import CartModel from '../DAO/mongoManager/models/cart.model.js';
+import cloudProductManager from '../DAO/mongo/controllers/product.manager.js';
+import CartModel from '../DAO/mongo/models/cart.model.js';
 import { passportCall } from '../utils.js';
 const router = Router();
 
