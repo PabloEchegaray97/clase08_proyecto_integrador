@@ -56,28 +56,18 @@ app.use(session({
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
-
-app.use(cookieParser());
-
-
-mongoose.set('strictQuery', false);
-
-mongoose.connect(config.dbUrl, {
-  dbName: config.dbName
-})
-  .then(() => {
-    console.log('DB connected!!');
-    httpServer.on('error', e => console.error(e));
-  })
-  .catch(e => {
-    console.log("Can't connect to DB");
-  });
+app.use(cookieParser())
 
 app.io = io;
 
 app.use('/product', productRouter);
 
-app.use('/chat', chatRouter);
+
+app.use('/test', productsRouter)
+
+
+
+app.use('/chat', chatRouter)
 app.use('/cart', cartRouter)
 app.use('/jwt', jwtRouter)
 
@@ -86,7 +76,7 @@ app.get('/health', (req,res) => {
 })
 app.use('/api/session', sessionRouter)
 app.use('/', viewsRouter)
-const carts = await cartModel.find();
+const carts = await cartModel.find()
 console.log(JSON.stringify(carts, null, '\t'))
 
 export default app;

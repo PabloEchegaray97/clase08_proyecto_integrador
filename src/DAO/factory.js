@@ -12,7 +12,7 @@ switch(config.persistence) {
             useUnifiedTopology: true,
             dbName: config.dbName
         })
-
+        mongoose.set('strictQuery', false);
         const {default: ProductMongo} = await import('./mongo/products.mongo.js')
 
         Product = ProductMongo
