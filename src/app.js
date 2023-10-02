@@ -20,6 +20,7 @@ import jwtRouter from './routes/jwt.router.js'
 //test
 import productsRouter from './routes/products.router.js'
 import usersRouter from './routes/users.router.js'
+import cartsRouter from './routes/carts.router.js'
 
 //
 const app = express();
@@ -65,6 +66,7 @@ app.use('/product', productRouter);
 
 
 app.use('/userstest', usersRouter)
+app.use('/cartstest', cartsRouter)
 app.use('/test', productsRouter)
 
 

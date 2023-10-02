@@ -13,7 +13,7 @@ const UserModel = mongoose.model('users', new mongoose.Schema({
         type: String,
         default: 'user'
     },
-    cart: String
+    cart: String //usar id del carrito nuevo
 }));
 
 export default UserModel;
