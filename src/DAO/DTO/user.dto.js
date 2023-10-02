@@ -5,8 +5,9 @@ export default class UserDTO {
         this.email = user?.email ?? 'null';
         this.first_name = user?.first_name ?? this.extractUserName(user?.email);
         this.last_name = user?.last_name ?? ''
-        this.age = user?.age ?? 'null'
+        this.age = user?.age ?? 0
         this.role = user?.role ?? 'user'
+        this.cart = user?.cart ?? ''
     }
 
     extractUserName(email) {

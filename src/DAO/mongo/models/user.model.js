@@ -12,7 +12,8 @@ const UserModel = mongoose.model('users', new mongoose.Schema({
     role: {
         type: String,
         default: 'user'
-    }
+    },
+    cart: String
 }));
 
 export default UserModel;

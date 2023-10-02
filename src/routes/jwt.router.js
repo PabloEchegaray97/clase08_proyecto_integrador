@@ -1,25 +1,11 @@
 import { Router } from "express";
 import { generateToken, authToken, passportCall, authorization, isValidPassword } from "../utils.js";
 import UserModel from "../DAO/mongo/models/user.model.js";
-const usersDB = [
-    {
-        email: 'dario@gmail.com',
-        password: '123456',
-        name: 'Dario',
-        role: 'user'
-    },
-    {
-        email: 'noah@gmail.com',
-        password: '123456',
-        name: 'Noah Brisa',
-        role: 'seller'
-    },
-]
+const usersDB = []
 const router = Router()
 
 router.post('/register', (req, res) => {
     const user = req.body
-
     if (usersDB.find(u => u.email === user.email)) {
         return res.status(400).send('User already exits')
     }

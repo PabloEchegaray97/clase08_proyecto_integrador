@@ -18,9 +18,10 @@ import config from './config/config.js'
 import cookieParser from 'cookie-parser'
 import jwtRouter from './routes/jwt.router.js'
 //test
-
 import productsRouter from './routes/products.router.js'
+import usersRouter from './routes/users.router.js'
 
+//
 const app = express();
 const httpServer = app.listen(config.port, () => console.log('Listening on 8080'));
 const io = new Server(httpServer);
@@ -63,8 +64,8 @@ app.io = io;
 app.use('/product', productRouter);
 
 
+app.use('/userstest', usersRouter)
 app.use('/test', productsRouter)
-
 
 
 app.use('/chat', chatRouter)
