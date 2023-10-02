@@ -6,8 +6,8 @@ export const getUsers = async (req, res) => {
 }
 
 export const getUser = async (req, res) => {
-    const {email} = req.body
-    const result = await userService.getUser(email)
+    const user = req.body
+    const result = await userService.getUser(user)
     res.send({ status: 'success', payload: result })
 }
 
