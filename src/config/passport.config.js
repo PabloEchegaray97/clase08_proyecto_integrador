@@ -5,8 +5,7 @@ import GitHubStrategy from 'passport-github2'
 import { createHash, isValidPassword } from "../utils.js";
 //
 import jwt from 'passport-jwt'
-import dotenv from 'dotenv'
-dotenv.config()
+import { userService } from '../services/index.js'
 
 
 /**
@@ -57,7 +56,7 @@ const initializePassport = () => {
             console.log(profile)
 
             try {
-                const user = await UserModel.findOne({ email: profile._json.email })
+                const user = await userService.getUser({ email: profile._json.email })
                 if (user) {
                     console.log('User already exits ' + profile._json.email)
                     return done(null, user)
@@ -68,7 +67,7 @@ const initializePassport = () => {
                     email: profile._json.email,
                     password: '',
                 }
-                const result = await UserModel.create(newUser)
+                const result = await userService.createUser(newUser)
                 return done(null, result)
             } catch (e) {
                 return done('Error to login wuth github' + e)
@@ -85,7 +84,8 @@ const initializePassport = () => {
         async (req, username, password, done) => {
             const { first_name, last_name, age, role, email } = req.body
             try {
-                const user = await UserModel.findOne({ email: username })
+                console.log(username);
+                const user = await userService.getUser({ email: username })
                 if (user) {
                     console.log('User already exits')
                     return done(null, false)
@@ -97,9 +97,9 @@ const initializePassport = () => {
                     email,
                     password: createHash(password),
                     age,
-                    role
+                    role,
                 }
-                const result = await UserModel.create(newUser)
+                const result = await userService.createUser(newUser)
                 return done(null, result)
             } catch (e) {
                 return done('Error to register ' + e)
@@ -112,7 +112,7 @@ const initializePassport = () => {
     })
 
     passport.deserializeUser(async (id, done) => {
-        const user = await UserModel.findById(id)
+        const user = await userService.getUserById(id) 
         done(null, user)
     })
 

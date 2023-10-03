@@ -9,11 +9,14 @@ export default class Product {
     getUser = async (email) => {
         return await UserModel.findOne({ email }).lean().exec()
     }
+    getUserById = async (id) => {
+        return await UserModel.findOne({_id: id})
+    }
     createUser = async (user) => {
         return await UserModel.create(user)
     }
     userLogin = async (email, password) => {
-        const user = await UserModel.findOne({email}).lean().exec()
+        const user = await this.getUser(email)
         console.log(user)
         if (!user) {
             throw new Error('Invalid email!')
@@ -25,4 +28,12 @@ export default class Product {
         }
         return user;
     }
+    userRegister = async (newUser) => {
+        const user = await getUser(newUser.email)
+        if (user) {
+            throw new Error ('User already exists')
+        }
+        return await this.createUser(newUser)
+    }
+    
 }

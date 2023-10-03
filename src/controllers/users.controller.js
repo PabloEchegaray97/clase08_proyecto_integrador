@@ -1,4 +1,4 @@
-import { userService } from "../services/index.js"
+import { userService, cartService } from "../services/index.js"
 import { generateToken } from "../utils.js"
 
 export const getUsers = async (req, res) => {
@@ -11,9 +11,16 @@ export const getUser = async (req, res) => {
     const result = await userService.getUser(user)
     res.send({ status: 'success', payload: result })
 }
-
+export const getUserById = async (req, res) => {
+    const { id } = req.params
+    const result = await userService.getUserById(id)
+    res.send({ status: 'success', payload: result })
+}
 export const createUser = async (req, res) => {
     const user = req.body
+    const newCart = await cartService.createCart()
+    user.cart = newCart._id
+    console.log(user);
     const result = await userService.createUser(user)
     res.send({ status: 'success', payload: result })
 }
@@ -41,3 +48,7 @@ export const userLogin = async (req, res) => {
         });
     }
 };
+
+export const userRegister = async (req, res) => {
+    res.redirect('/')
+}
