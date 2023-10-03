@@ -70,12 +70,11 @@ const initializePassport = () => {
                 const result = await userService.createUser(newUser)
                 return done(null, result)
             } catch (e) {
-                return done('Error to login wuth github' + e)
+                return done('Error logging with github' + e)
             }
         }
     ))
 
-    // register Es el nomber para Registrar con Local
     passport.use('register', new LocalStrategy(
         {
             passReqToCallback: true,
@@ -102,7 +101,7 @@ const initializePassport = () => {
                 const result = await userService.createUser(newUser)
                 return done(null, result)
             } catch (e) {
-                return done('Error to register ' + e)
+                return done('Error registering ' + e)
             }
         }
     ))
