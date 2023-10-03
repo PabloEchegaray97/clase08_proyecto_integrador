@@ -1,5 +1,6 @@
 import UserDTO from '../DAO/DTO/user.dto.js'
 import { generateToken, isValidPassword } from '../utils.js'
+
 export default class UserRepository {
     constructor(dao) {
         this.dao = dao
@@ -13,6 +14,9 @@ export default class UserRepository {
     createUser = async(user) => {
         const newUser = new UserDTO(user)
         return await this.dao.createUser(newUser)
+    }
+    userLogin = async(email, password) => {
+        return await this.dao.userLogin(email,password)
     }
     
 }
