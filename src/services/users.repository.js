@@ -17,7 +17,6 @@ export default class UserRepository {
         return await this.dao.createUser(newUser)
     }
     userLogin = async(email, password) => {
-        
         return await this.dao.userLogin(email,password)
     }
     getAdminPanel = async() => {

@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import messageModel from '../DAO/mongo/models/chat.model.js';
-
+import { generateToken, authToken, passportCall, authorization, isValidPassword } from "../utils.js";
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/', passportCall('jwt'), authorization('user'), async (req, res) => {
     try {
         const chats = await messageModel.find().lean().exec();
         res.render('chat', { chats });
@@ -13,9 +13,10 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', passportCall('jwt'), authorization('user'),async (req, res) => {
     const newMessage = req.body;
-
+    newMessage.user = req.user.user.email
+    console.log(newMessage);
     try {
         const messageGenerated = new messageModel(newMessage);
         await messageGenerated.save();
