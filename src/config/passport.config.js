@@ -16,9 +16,9 @@ Secret: 02e811b889132c78baf0d4cd0662be09dd3d0bed
 const LocalStrategy = local.Strategy
 //
 const JWTStrategy = jwt.Strategy // La estrategia de JWT
-const ExtractJWT = jwt.ExtractJwt // La funcion de extraccion
+export const ExtractJWT = jwt.ExtractJwt // La funcion de extraccion
 
-const cookieExtractor = req => {
+export const cookieExtractor = req => {
     const token = (req?.cookies) ? req.cookies['coderCookie'] : null
 
     console.log('COOKIE EXTRACTOR: ', token)

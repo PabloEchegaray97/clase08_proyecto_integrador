@@ -19,4 +19,11 @@ export default class Product {
     createProduct = async (product) => {
         return await new ProductModel(product).save()
     }
+    //test
+    deleteProduct = async (id) => {
+        return await ProductModel.deleteOne({_id: id})
+    }
+    updateProduct = async(id, product) => {
+        return await ProductModel.findByIdAndUpdate(id, product)
+    }
 }

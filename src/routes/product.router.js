@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const id = req.params.id
     await productModel.deleteOne({ _id: id })
-    res.redirect('/product')
+    res.redirect('/products')
 })
 
 router.put('/:id', async (req, res) => {

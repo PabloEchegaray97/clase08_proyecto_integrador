@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { getUsers, getUser, createUser, userLogin, userRegister } from "../controllers/users.controller.js";
+import { getUsers, getUser, createUser, userLogin, userRegister, getAdminPanel } from "../controllers/users.controller.js";
+import { authorization, passportCall } from "../utils.js";
 import passport from "passport";
 
 
@@ -10,5 +11,6 @@ router.get('/user', getUser)
 router.post('/', createUser)
 router.post('/login', userLogin)
 router.post('/register', passport.authenticate('register', { failureRedirect: '/register', }), userRegister)
+router.get('/admin', passportCall('jwt'), authorization('admin'), getAdminPanel)
 
 export default router

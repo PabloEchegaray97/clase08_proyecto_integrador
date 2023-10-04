@@ -22,6 +22,7 @@ import productsRouter from './routes/products.router.js'
 import usersRouter from './routes/users.router.js'
 import cartsRouter from './routes/carts.router.js'
 import chatsRouter from './routes/chats.router.js'
+import tickesRouter from './routes/tickets.router.js'
 //
 const app = express();
 const httpServer = app.listen(config.port, () => console.log('Listening on 8080'));
@@ -69,7 +70,7 @@ app.use('/userstest', usersRouter)
 app.use('/cartstest', cartsRouter)
 app.use('/test', productsRouter)
 app.use('/chatstest', chatsRouter)
-
+app.use('/ticket', tickesRouter)
 
 app.use('/chat', chatRouter)
 app.use('/cart', cartRouter)

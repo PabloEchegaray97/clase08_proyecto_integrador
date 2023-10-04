@@ -1,4 +1,4 @@
-import {fileURLToPath} from 'url'
+import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -19,7 +19,7 @@ export const isValidPassword = (user, password) => {
 
 // JWT Generamos el token
 export const generateToken = (user) => {
-    const token = jwt.sign( {user}, PRIVATE_KEY, {expiresIn: '24h'})
+    const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: '24h' })
 
     return token
 }
@@ -29,19 +29,19 @@ export const authToken = (req, res, next) => {
 
     // Buscamos el token en el header o en la cookie
     let authHeader = req.headers.auth
-    if(!authHeader) {
-      authHeader = req.cookies['coderToken'] 
-      if(!authHeader) {
-        return res.status(401).send({
-            error: 'Not auth'
-        })
-      }
+    if (!authHeader) {
+        authHeader = req.cookies['coderToken']
+        if (!authHeader) {
+            return res.status(401).send({
+                error: 'Not auth'
+            })
+        }
     }
 
     // Verificamos y desencriptamos la informacion 
     const token = authHeader
     jwt.verify(token, PRIVATE_KEY, (error, credentials) => {
-        if(error) return res.status(403).send({error: 'Not authroized'})
+        if (error) return res.status(403).send({ error: 'Not authroized' })
 
         req.user = credentials.user
         next()
@@ -49,12 +49,12 @@ export const authToken = (req, res, next) => {
 }
 
 export const passportCall = strategy => {
-    return async(req, res, next) => {
-        passport.authenticate(strategy, function(err, user, info) {
-            if(err) return next(err)
-            if(!user) {
+    return async (req, res, next) => {
+        passport.authenticate(strategy, function (err, user, info) {
+            if (err) return next(err)
+            if (!user) {
                 return res.status(401).send({
-                    error: info.messages? info.messages : info.toString()
+                    error: info.messages ? info.messages : info.toString()
                 })
             }
 
@@ -66,16 +66,29 @@ export const passportCall = strategy => {
 
 export const authorization = role => {
 
-    return async(req, res, next) => {
+    return async (req, res, next) => {
         const user = req.user
-        
-        if(!user) return res.status(401).send({error: 'Unauthorized'})
-        if(user.user.role != role) return res.status(403).send({error: 'No permission'})
+
+        if (!user) return res.status(401).send({ error: 'Unauthorized' })
+        if (user.user.role != role) return res.status(403).send({ error: 'No permission' })
 
         return next()
     }
 
 }
 
+export const auth = (req, res, next) => {
+    console.log(req.session.user)
+    if (req.session?.user.role == 'admin') return next()
+    return res.status(401).send('Unauthorized')
+}
 
+/*
+function auth(req, res, next) {
+    if(req.session?.user.role == 'admin') return next()
+    return res.status(401).send('No tienes acceso a esta pagina')
+}
+
+
+*/
 export default __dirname

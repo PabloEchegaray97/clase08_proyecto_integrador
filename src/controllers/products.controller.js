@@ -16,3 +16,20 @@ export const createProduct = async (req, res) => {
     const result = await productService.createProduct(product)
     res.send({status: 'success', payload: result})
 }
+//test
+export const deleteProduct = async (req, res) => {
+    const {id} = req.params
+    const result = await productService.deleteProduct(id)
+    res.send({
+        status: 'success', payload: result
+    })
+}
+
+export const updateProduct = async (req, res) => {
+    const {id} = req.params
+    const newProduct = req.body
+    const result = await productService.updateProduct(id, newProduct)
+    res.send({
+        status: 'success', payload: result
+    })
+}

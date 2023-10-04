@@ -29,19 +29,18 @@ export const userLogin = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await userService.userLogin(email, password);
-
-        const access_token = generateToken(user);
+        const {password:_, ...userWitoutSensitiveData} = await userService.userLogin(email, password);
+        console.log(userWitoutSensitiveData); 
+        const access_token = generateToken(userWitoutSensitiveData);
 
         res.cookie('coderCookie', access_token, {
             maxAge: 60 * 60 * 1000,
             httpOnly: true
         }).send({
             status: 'success',
-            payload: user
+            payload: userWitoutSensitiveData
         });
     } catch (error) {
-        // Si hay un error en la autenticación, envía un mensaje de error adecuado
         res.status(401).send({
             status: 'error',
             error: 'Invalid email or password'
@@ -52,3 +51,22 @@ export const userLogin = async (req, res) => {
 export const userRegister = async (req, res) => {
     res.redirect('/')
 }
+
+export const getAdminPanel = async (req, res) => {
+    try {
+        const users = await userService.getUsers();
+        const usersWithoutPasswords = users.map(user => {
+            const { password, ...userWithoutPassword } = user._doc;
+            return userWithoutPassword;
+        });
+        res.send({
+            status: 'success',
+            payload: usersWithoutPasswords
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: 'error',
+            error: 'Internal server error'
+        });
+    }
+};
