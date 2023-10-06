@@ -28,9 +28,9 @@ export const createCart = async (req, res) => {
 export const checkoutCart = async (req, res) => {
     const {cid} = req.params
     const result = await cartService.checkoutCart(cid)
-    
+
     if (result == true) {
-        const newTicket = ticketService.createTicket()
+        const newTicket = ticketService.createTicket() //agregar a usuario 
     }
     res.send({
         status: 'success', 
