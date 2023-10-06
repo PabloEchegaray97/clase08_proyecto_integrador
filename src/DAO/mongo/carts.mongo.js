@@ -1,5 +1,4 @@
 import CartModel from './models/cart.model.js'
-
 export default class Cart {
     getCarts = async () => {
         return await CartModel.find() 
@@ -10,4 +9,5 @@ export default class Cart {
     createCart = async (cart) => {
         return await CartModel.create(cart)
     }
+    
 }

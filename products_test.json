@@ -1,0 +1,62 @@
+[
+    {
+        "name": "product",
+        "price": 0,
+        "photo": "https://s3-eu-west-1.amazonaws.com/yi-files/content/2018/08/5b6e028ab0441.jpg",
+        "quantity": 57
+    },
+    {
+        "name": "product",
+        "price": 0,
+        "photo": "https://s3-eu-west-1.amazonaws.com/yi-files/content/2018/08/5b6e028ab0441.jpg",
+        "quantity": 32
+    },
+    {
+        "name": "modified_product",
+        "price": 0,
+        "photo": "https://s3-eu-west-1.amazonaws.com/yi-files/content/2018/08/5b6e028ab0441.jpg",
+        "quantity": 81
+    },
+    {
+        "name": "cajita linda",
+        "price": 123,
+        "photo": "https://s3-eu-west-1.amazonaws.com/yi-files/content/2018/08/5b6e028ab0441.jpg",
+        "quantity": 64
+    },
+    {
+        "name": "Tablet ProBook Z",
+        "price": 249.5,
+        "photo": "https://via.placeholder.com/300/0000FF/FFFFFF/?text=Tablet+ProBook+Z",
+        "quantity": 48
+    },
+    {
+        "name": "Smartwatch TimeMaster 3",
+        "price": 249.99,
+        "photo": "https://via.placeholder.com/300/C0C0C0/000000/?text=Smartwatch+TimeMaster+3",
+        "quantity": 89
+    },
+    {
+        "name": "Smartwatch TimeMaster 3",
+        "price": 249.99,
+        "photo": "https://via.placeholder.com/300/C0C0C0/000000/?text=Smartwatch+TimeMaster+3",
+        "quantity": 72
+    },
+    {
+        "name": "Camera ProShot 200",
+        "price": 299.95,
+        "photo": "https://via.placeholder.com/300/00FFFF/000000/?text=Camera+ProShot+200",
+        "quantity": 14
+    },
+    {
+        "name": "Camera ProShot 200",
+        "price": 299.95,
+        "photo": "https://via.placeholder.com/300/00FFFF/000000/?text=Camera+ProShot+200",
+        "quantity": 23
+    },
+    {
+        "name": "Camera ProShot 300",
+        "price": 399.95,
+        "photo": "https://via.placeholder.com/300/00C0C0/000000/?text=Camera+ProShot+300",
+        "quantity": 95
+    }
+]

@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 
-
 const cartSchema = mongoose.Schema({
     products: [
         {
@@ -18,6 +17,13 @@ cartSchema.pre('find', function(next) {
     this.populate('products.product');
     next();
 });
+
+cartSchema.pre('findOne', function(next) {
+    this.populate('products.product');
+    next();
+})
+
+
 
 const cartModel = mongoose.model('carts', cartSchema);
 
