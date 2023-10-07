@@ -35,5 +35,9 @@ export default class Product {
         }
         return await this.createUser(newUser)
     }
+
+    getUserByCartId = async (cid) => {
+        return await UserModel.findOne({cart: cid}).lean().exec()
+    }
     
 }

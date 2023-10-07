@@ -22,5 +22,7 @@ export default class UserRepository {
     getAdminPanel = async() => {
         return await this.dao.getAdminPanel()
     }
-    
+    getUserByCartId = async(cid) => {
+        return await this.dao.getUserByCartId(cid)
+    }
 }

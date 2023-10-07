@@ -1,5 +1,5 @@
 //cambiar id al generar carrito dependiendo de la persistencia, usar getNextID
-import {cartService} from '../services/index.js'
+import {cartService, userService} from '../services/index.js'
 import { ticketService } from '../services/index.js'
 export const getCarts = async (req, res) => {
     const result = await cartService.getCarts()
@@ -28,7 +28,8 @@ export const createCart = async (req, res) => {
 export const checkoutCart = async (req, res) => {
     const {cid} = req.params
     const result = await cartService.checkoutCart(cid)
-
+    const user = await userService.getUserByCartId(cid)
+    console.log(user);
     if (result == true) {
         const newTicket = ticketService.createTicket() //agregar a usuario 
     }

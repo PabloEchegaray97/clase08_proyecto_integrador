@@ -5,7 +5,7 @@ export default class Ticket {
         return await TicketModel.find()
     }
     getTicketByCode = async (code) => {
-        return await TicketModel.findOne({code}).lean.exec()
+        return await TicketModel.findOne({code})
     }
     createTicket = async (ticket) => {
         return await TicketModel.create(ticket)
