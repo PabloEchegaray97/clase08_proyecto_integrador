@@ -7,7 +7,7 @@ export default class UserDTO {
         this.last_name = user?.last_name ?? ''
         this.age = user?.age ?? 0
         this.role = user?.role ?? 'user'
-        this.cart = user?.cart
+        this.cart = user?.cart 
         this.password = user?.password
     }
     

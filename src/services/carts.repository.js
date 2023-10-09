@@ -1,4 +1,5 @@
 import CartDTO from '../DAO/DTO/cart.dto.js'
+import { deleteProductFromCart } from '../controllers/carts.controller.js'
 
 export default class CartRepository {
     constructor(dao) {
@@ -17,6 +18,7 @@ export default class CartRepository {
     }
     checkoutCart = async (cid) => {
         const cart = await this.dao.getCart(cid);
+        const total = 0
         const checkedProducts = cart.products.map((product, index) => {
             console.log(`Producto ${index + 1}:`);
             console.log(`Nombre: ${product.product.name}`);
@@ -25,6 +27,7 @@ export default class CartRepository {
             console.log(`Cantidad en carrito: ${product.quantity}`);
             console.log('---');
             if (product.quantity > product.product.quantity) { //retornar los productos que tienen una cantidad solicitada mayor a la existente
+                total = product.product.price * product.quantity + total
                 return product;
             } else {
                 return null;
@@ -33,8 +36,14 @@ export default class CartRepository {
         if (checkedProducts.length > 0) {
             return checkedProducts
         }
-        return true
+        return {total}
     };
 
-
+    addProductToCart = async (cid, productId, quantity) => {
+        return await this.dao.addProductToCart(cid, productId, quantity)
+    }
+    
+    deleteProductFromCart = async (cid, productId) => {
+        return await this.dao.deleteProductFromCart(cid, productId)
+    }
 }

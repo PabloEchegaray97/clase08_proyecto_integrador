@@ -1,40 +1,45 @@
 //cambiar id al generar carrito dependiendo de la persistencia, usar getNextID
-import {cartService, userService} from '../services/index.js'
+import { cartService, userService } from '../services/index.js'
 import { ticketService } from '../services/index.js'
+
 export const getCarts = async (req, res) => {
     const result = await cartService.getCarts()
-    res.send({
-        status:'success',
-        payload: result
-    })
+    res.send({ status: 'success', payload: result })
 }
 
 export const getCart = async (req, res) => {
-    const {cid} = req.params
+    const { cid } = req.params
     const result = await cartService.getCart(cid)
-    res.send({
-        status: 'success',
-        payload: result
-    })
+    
+    res.send({ status: 'success', payload: result })
 }
 
 export const createCart = async (req, res) => {
-    const result = await cartService.createCart({products: []})
-    res.send ({
-        status: 'success',
-        payload: result
-    })
+    const result = await cartService.createCart({ products: [] })
+    res.send({ status: 'success', payload: result })
 }
 export const checkoutCart = async (req, res) => {
-    const {cid} = req.params
+    const { cid } = req.params
     const result = await cartService.checkoutCart(cid)
-    const user = await userService.getUserByCartId(cid)
-    console.log(user);
-    if (result == true) {
-        const newTicket = ticketService.createTicket() //agregar a usuario 
+    const user = req.user.user.email
+    if (typeof result.total == "number") {
+        const newTicket = await ticketService.createTicket({ purchaser: user, total: result }) //agregar a usuario 
+        return res.send({ status: 'success', payload: newTicket })
     }
-    res.send({
-        status: 'success', 
-        payload: result
-    })
+    res.send({ status: 'success', payload: result })
+}
+
+export const addProductToCart = async (req, res) => {
+    const { cid, productId } = req.params
+    const quantity = req.query.quantity || 1
+    const result = await cartService.addProductToCart(cid, productId, quantity)
+    
+    res.send({ status: 'success', payload: result })
+}
+
+export const deleteProductFromCart = async (req, res) => {
+    const { cid, productId } = req.params
+    const result = await cartService.deleteProductFromCart(cid, productId)
+
+    res.send({ status: 'success', payload: result })
 }
