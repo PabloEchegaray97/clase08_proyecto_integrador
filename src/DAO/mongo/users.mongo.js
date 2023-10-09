@@ -1,6 +1,5 @@
 import UserModel from "./models/user.model.js";
 import { isValidPassword } from "../../utils.js";
-
 export default class Product {
     getUsers = async () => {
         const result = await UserModel.find()

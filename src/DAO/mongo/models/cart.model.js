@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const cartSchema = mongoose.Schema({
     products: [
         {
@@ -23,9 +22,5 @@ cartSchema.pre('findOne', function(next) {
     next();
 })
 
-
-
-const cartModel = mongoose.model('carts', cartSchema);
-
-
+const cartModel = mongoose.model('carts', cartSchema)
 export default cartModel

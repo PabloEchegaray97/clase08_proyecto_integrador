@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import passport from "passport";
-import { createHash, isValidPassword, generateToken } from "../utils.js";
+import { generateToken } from "../utils.js";
 
 const router = Router();
 

@@ -1,6 +1,5 @@
 import passport from "passport";
 import local from 'passport-local'
-import UserModel from "../DAO/mongo/models/user.model.js";
 import GitHubStrategy from 'passport-github2'
 import { createHash, isValidPassword } from "../utils.js";
 //
@@ -27,8 +26,6 @@ export const cookieExtractor = req => {
 //
 
 const initializePassport = () => {
-
-    //jwt
     passport.use(
         'jwt',
         new JWTStrategy(
@@ -45,7 +42,6 @@ const initializePassport = () => {
                 }
             })
     )
-    //
     passport.use('github', new GitHubStrategy(
         {
             clientID: 'Iv1.9ab4ba689e8ec607',

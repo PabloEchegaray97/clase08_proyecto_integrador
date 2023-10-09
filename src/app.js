@@ -1,6 +1,6 @@
 import express from 'express';
 import handlebars from 'express-handlebars';
-import mongoose from 'mongoose';
+
 import productRouter from './routes/product.router.js';
 import chatRouter from './routes/chat.router.js';
 import cartRouter from './routes/cart.router.js'

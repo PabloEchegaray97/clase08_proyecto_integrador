@@ -16,7 +16,7 @@ export default class CartRepository {
         const newCart = new CartDTO(cart)
         return await this.dao.createCart(newCart)
     }
-    checkoutCart = async (cid) => {
+    cartPurchase = async (cid) => {
         const cart = await this.dao.getCart(cid);
         const total = 0
         const checkedProducts = cart.products.map((product, index) => {
@@ -42,7 +42,7 @@ export default class CartRepository {
     addProductToCart = async (cid, productId, quantity) => {
         return await this.dao.addProductToCart(cid, productId, quantity)
     }
-    
+
     deleteProductFromCart = async (cid, productId) => {
         return await this.dao.deleteProductFromCart(cid, productId)
     }
