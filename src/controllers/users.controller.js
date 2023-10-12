@@ -1,5 +1,8 @@
 import { userService, cartService } from "../services/index.js"
 import { generateToken } from "../utils.js"
+import EErrors from "../services/errors/enums.js"
+import CustomError from "../services/errors/custom_error.js";
+import { generateUserErrorInfo } from "../services/errors/info.js"
 
 export const getUsers = async (req, res) => {
     const result = await userService.getUsers()
@@ -18,6 +21,17 @@ export const getUserById = async (req, res) => {
 }
 export const createUser = async (req, res) => {
     const user = req.body
+    if(!user.last_name || !user.first_name || !user.email) {
+
+        CustomError.createError({
+            name: 'User creation error',
+            cause: generateUserErrorInfo(user),
+            message: 'Error trying to create user',
+            code: EErrors.INVALID_TYPES_ERROR
+        });
+        
+        
+    }
     const newCart = await cartService.createCart()
     user.cart = newCart._id
     console.log(user);

@@ -3,6 +3,7 @@ import { dirname } from 'path'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
+import { faker } from '@faker-js/faker/locale/es'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -91,4 +92,15 @@ function auth(req, res, next) {
 
 
 */
+
+export const generateProduct = () => {
+    return {
+        name: faker.commerce.productName(),
+        price: faker.commerce.price(),
+        quantity: faker.number.int({ max: 100 }),
+        id: faker.database.mongodbObjectId(),
+        photo: faker.image.urlLoremFlickr()
+    }
+}
+
 export default __dirname

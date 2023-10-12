@@ -24,10 +24,15 @@ import cartsRouter from './routes/carts.router.js'
 import chatsRouter from './routes/chats.router.js'
 import tickesRouter from './routes/tickets.router.js'
 //
+import mockingRouter from './routes/mocking.router.js'
+//
+import errorHandler from './middlewares/error.js'
+
 const app = express();
 const httpServer = app.listen(config.port, () => console.log('Listening on 8080'));
 const io = new Server(httpServer);
 
+app.use(errorHandler)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -45,23 +50,24 @@ app.use(session({
       mongoOptions: {
           useNewUrlParser:true,
           useUnifiedTopology:true
-      },
-  }),
-  secret: 'secret',
-  resave: true,
-  saveUninitialized:true,
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000, // 24 horas
-}
-}))
-
-// Passport
-initializePassport()
+        },
+      }),
+      secret: 'secret',
+      resave: true,
+      saveUninitialized:true,
+      cookie: {
+        maxAge: 24 * 60 * 60 * 1000, // 24 horas
+      }
+    }))
+    
+    // Passport
+    initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(cookieParser())
 
 app.io = io;
+//
 
 app.use('/product', productRouter);
 
@@ -71,6 +77,8 @@ app.use('/cartstest', cartsRouter)
 app.use('/test', productsRouter)
 app.use('/chatstest', chatsRouter)
 app.use('/ticket', tickesRouter)
+
+app.use('/mocking', mockingRouter)
 
 app.use('/chat', chatRouter)
 app.use('/cart', cartRouter)
