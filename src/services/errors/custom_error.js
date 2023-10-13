@@ -1,16 +1,16 @@
 export default class CustomError {
+
     static createError({
-        name = "Error",
+        name="Error",
         cause,
         message,
         code
     }) {
-        const error = new Error(message); // Proporciona un mensaje al constructor del Error
-        error.name = name;
-        error.code = code;
-        error.cause = cause; 
+        const error = new Error(message, {cause})
+        error.name = name
+        error.code = code
 
-        throw error;
+        throw error
     }
-}
 
+}

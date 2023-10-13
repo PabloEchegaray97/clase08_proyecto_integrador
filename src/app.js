@@ -32,7 +32,6 @@ const app = express();
 const httpServer = app.listen(config.port, () => console.log('Listening on 8080'));
 const io = new Server(httpServer);
 
-app.use(errorHandler)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -89,6 +88,9 @@ app.get('/health', (req,res) => {
 })
 app.use('/api/session', sessionRouter)
 app.use('/', viewsRouter)
+
+app.use(errorHandler)
+
 const carts = await cartModel.find()
 console.log(JSON.stringify(carts, null, '\t'))
 
