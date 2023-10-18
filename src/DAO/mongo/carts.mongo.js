@@ -1,4 +1,5 @@
 import CartModel from './models/cart.model.js'
+import ProductModel from './models/product.model.js'
 export default class Cart {
     getCarts = async () => {
         return await CartModel.find() 
@@ -39,5 +40,14 @@ export default class Cart {
             cart = await cart.save()
         }
         return cart
+    }
+
+    reduceQuantity = async (pid, quantity) => {
+        let product = await ProductModel.findOne({id: pid})
+        if (!product) {
+            return null
+        }
+        product.quantity -= quantity;
+        return await ProductModel.save()
     }
 }

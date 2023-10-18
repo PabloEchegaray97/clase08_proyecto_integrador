@@ -16,28 +16,26 @@ export default class CartRepository {
         const newCart = new CartDTO(cart)
         return await this.dao.createCart(newCart)
     }
+    reduceQuantity = async (pid, quantity) => {
+        return await this.dao.reduceQuantity(pid, quantity)
+    }
     cartPurchase = async (cid) => {
         const cart = await this.dao.getCart(cid);
-        const total = 0
+        let total = 0
+        const productsNotAvailable = []
+        const productsAvailable = []
         const checkedProducts = cart.products.map((product, index) => {
-            console.log(`Producto ${index + 1}:`);
-            console.log(`Nombre: ${product.product.name}`);
-            console.log(`Precio: ${product.product.price}`);
-            console.log(`Cantidad en stock: ${product.product.quantity}`);
-            console.log(`Cantidad en carrito: ${product.quantity}`);
-            console.log('---');
-            if (product.quantity > product.product.quantity) { //retornar los productos que tienen una cantidad solicitada mayor a la existente
+            if (product.quantity < product.product.quantity) { // los productos que disponen de la cantidad pedida pasan
                 total = product.product.price * product.quantity + total
+                productsAvailable.push(product) // se pushean al array el producto disponible
                 return product;
             } else {
-                return null;
+                productsNotAvailable.push(product) // se pushean los productos no disponibles
             }
-        }).filter(product => product !== null); // Filtramos los productos que no cumplieron el criterio
-        if (checkedProducts.length > 0) {
-            return checkedProducts
-        }
-        return {total}
-    };
+        })
+        const result = {productsAvailable, productsNotAvailable, total}
+        return result
+    }
 
     addProductToCart = async (cid, productId, quantity) => {
         return await this.dao.addProductToCart(cid, productId, quantity)

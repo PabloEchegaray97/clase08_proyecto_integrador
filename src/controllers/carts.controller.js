@@ -21,6 +21,7 @@ export const createCart = async (req, res) => {
 export const cartPurchase = async (req, res) => {
     const { cid } = req.params
     const result = await cartService.cartPurchase(cid)
+    console.log(result);
     const user = req.user.user.email
     if (typeof result.total == "number") {
         const newTicket = await ticketService.createTicket({ purchaser: user, total: result }) //agregar a usuario 
