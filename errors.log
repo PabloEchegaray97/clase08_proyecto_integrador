@@ -1,3 +1,2 @@
-fatal: Faltal error
-error: Error
-warning: Warning
+18/10/2023, 04:49:03 [ERROR] - Error trying to get user, email doesn't exist
+18/10/2023, 04:49:13 [ERROR] - Error trying to get user, email doesn't exist
