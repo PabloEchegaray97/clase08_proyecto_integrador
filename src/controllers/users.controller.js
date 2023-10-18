@@ -20,7 +20,7 @@ export const getUser = async (req, res, next) => {
         const user = req.body
         const result = await userService.getUser(user)
         if (!user.email) {
-
+            req.logger.error(`Error trying to get user, email doesn't exist`)
             CustomError.createError({
                 name: 'User logging error',
                 cause: generateUserLoginErrorInfo(user.email),
@@ -43,7 +43,7 @@ export const createUser = async (req, res, next) => {
     try {
         const user = req.body
         if (!user.email) {
-
+            req.logger.error(`Error trying to get user, email doesn't exist`)
             CustomError.createError({
                 name: 'User creation error',
                 cause: generateUserErrorInfo(user),

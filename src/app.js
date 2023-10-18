@@ -23,12 +23,14 @@ import usersRouter from './routes/users.router.js'
 import cartsRouter from './routes/carts.router.js'
 import chatsRouter from './routes/chats.router.js'
 import tickesRouter from './routes/tickets.router.js'
-//
 import mockingRouter from './routes/mocking.router.js'
-//
 import errorHandler from './middlewares/error.js'
+//
+import { addLogger } from './middlewares/logger.js';
 
 const app = express();
+app.use(addLogger)
+
 const httpServer = app.listen(config.port, () => console.log('Listening on 8080'));
 const io = new Server(httpServer);
 

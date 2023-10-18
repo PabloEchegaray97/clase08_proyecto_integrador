@@ -10,4 +10,12 @@ router.get('/', async (req, res) => {
     res.send({status:'success', payload: products})
 })
 
+router.get('/loggertest', (req, res) => {
+    req.logger.fatal(`Faltal error`)
+    req.logger.error(`Server error`)
+    req.logger.warning(`Must change this property`)
+    req.logger.info(`Request sent`)
+    req.logger.debug(`:D`)
+    res.send('Logger Testing')
+})
 export default router;
