@@ -1,6 +1,5 @@
 //cambiar id al generar carrito dependiendo de la persistencia, usar getNextID
-import { cartService} from '../services/index.js'
-import { ticketService } from '../services/index.js'
+import { cartService, ticketService, productService} from '../services/index.js'
 
 export const getCarts = async (req, res) => {
     const result = await cartService.getCarts()
@@ -19,16 +18,26 @@ export const createCart = async (req, res) => {
     res.send({ status: 'success', payload: result })
 }
 export const cartPurchase = async (req, res) => {
-    const { cid } = req.params
-    const result = await cartService.cartPurchase(cid)
-    console.log(result);
-    const user = req.user.user.email
-    if (typeof result.total == "number") {
-        const newTicket = await ticketService.createTicket({ purchaser: user, total: result }) //agregar a usuario 
-        return res.send({ status: 'success', payload: newTicket })
+    const { cid } = req.params;
+    const result = await cartService.cartPurchase(cid);
+    const cart = await cartService.getCart(cid);
+    console.log(cart.products);
+    console.log(result.productsNotAvailable);
+    const user = req.user.user.email;
+    if (result.productsNotAvailable.length === 0) {
+        for (const product of cart.products) {
+            const productModified = {
+                ...product.product,
+                quantity: product.product.quantity - product.quantity
+            };
+            await productService.updateProduct(product.product._id, productModified); //reducir la cantidad del producto
+        }
+        const newTicket = await ticketService.createTicket({ purchaser: user, total: result.total }); // agregar a usuario
+        return res.send({ status: 'success', payload: newTicket });
     }
-    res.send({ status: 'success', payload: result })
-}
+    res.send({ status: 'not modified', payload: result.productsNotAvailable });
+};
+
 
 export const addProductToCart = async (req, res) => {
     const { cid, productId } = req.params
