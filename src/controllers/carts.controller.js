@@ -32,7 +32,7 @@ export const cartPurchase = async (req, res) => {
             };
             await productService.updateProduct(product.product._id, productModified); //reducir la cantidad del producto
         }
-        const newTicket = await ticketService.createTicket({ purchaser: user, total: result.total }); // agregar a usuario
+        const newTicket = await ticketService.createTicket({ purchaser: user, total: result.total, products: result.productsAvailable }); // agregar a usuario
         return res.send({ status: 'success', payload: newTicket });
     }
     res.send({ status: 'not modified', payload: result.productsNotAvailable });
