@@ -1,7 +1,10 @@
 import UserDTO from '../DAO/DTO/user.dto.js'
+import Mail from '../services/mail/mail.js'
+
 export default class UserRepository {
     constructor(dao) {
         this.dao = dao
+        this.mail = new Mail()
     }
     getUsers = async () => {
         return await this.dao.getUsers()
@@ -24,5 +27,10 @@ export default class UserRepository {
     }
     getUserByCartId = async(cid) => {
         return await this.dao.getUserByCartId(cid)
+    }
+    sendMail = async (user, subject) => {
+        const html = `<h1> test </h1>`
+        const result = await this.mail.send(user, subject, html)
+        return result
     }
 }

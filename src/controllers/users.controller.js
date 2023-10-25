@@ -107,3 +107,13 @@ export const getAdminPanel = async (req, res) => {
         });
     }
 };
+
+export const sendMail = async (req, res) => {
+    const email = req.body
+    console.log(email);
+    const user = await userService.getUser(email)
+    console.log(user);
+    const subject = 'test'
+    const result = await userService.sendMail(user,subject )
+    res.send({status: 'success', payload: result})
+}
