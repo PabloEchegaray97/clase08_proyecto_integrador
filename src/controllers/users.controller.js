@@ -1,8 +1,9 @@
 import { userService, cartService } from "../services/index.js"
-import { generateToken } from "../utils.js"
+import { generateToken, createHash } from "../utils.js"
 import CustomError from "../services/errors/custom_error.js";
 import { generateUserErrorInfo, generateUserLoginErrorInfo } from "../services/errors/info.js"
 import EErrors from "../services/errors/enums.js"
+
 
 export const getUsers = async (req, res) => {
     try {
@@ -116,4 +117,41 @@ export const sendMail = async (req, res) => {
     const subject = 'test'
     const result = await userService.sendMail(user,subject )
     res.send({status: 'success', payload: result})
+}
+
+export const resetPassword = async (req, res) => {
+    const {token} = req.query
+    const newPassword = req.body.newPassword || ''
+    console.log(token);
+    console.log(newPassword);
+    try {
+        const result = await userService.resetPassword(token);
+        if (result && newPassword != '') {
+            const uid = result.user._id
+            console.log("Usuario encontrado");
+            console.log(uid);
+            const modifiedUser = await userService.modifyUser(uid, {password: newPassword})
+            return res.send({ status: 'success', payload: modifiedUser});
+        } 
+
+        return res.send({status: 'failed', payload: 'Por favor ingrese su nueva contraseña:'})
+
+    } catch (error) {
+        res.status(400).send({ status: 'error', error: error.message });
+    }
+}
+export const testToken = async (req, res) => {
+    const userToken = req.body
+    const user = await userService.getUser(userToken)
+    const result = await userService.testToken(user)
+    res.send({status:'success', payload: result})
+}
+
+export const testUser = async (req, res) => {
+    const newuser = req.body
+    const user = await userService.getUser(newuser)
+    console.log(newuser);
+    const modifiedUser = await userService.modifyUser(user._id, {password: newuser.password})
+    res.send({status:'success', payload: modifiedUser})
+
 }

@@ -20,10 +20,23 @@ export const isValidPassword = (user, password) => {
 
 // JWT Generamos el token
 export const generateToken = (user) => {
-    const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: '24h' })
+    const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: '1h' })
 
     return token
 }
+
+// En utils.js
+export const verifyToken = async (token) => {
+    try {
+        const decoded = jwt.verify(token, PRIVATE_KEY);
+        return decoded;
+    } catch (error) {
+        console.error('Error al verificar el token:', error);
+        throw new Error('Token inválido');
+    }
+};
+
+
 
 // JWT Extraemos el token del header
 export const authToken = (req, res, next) => {

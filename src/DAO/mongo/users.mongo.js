@@ -39,4 +39,7 @@ export default class Product {
         return await UserModel.findOne({cart: cid}).lean().exec()
     }
     
+    modifyUser = async (uid, updatedUser) => {
+        return await UserModel.findByIdAndUpdate(uid, updatedUser, { new: true });
+    }
 }
