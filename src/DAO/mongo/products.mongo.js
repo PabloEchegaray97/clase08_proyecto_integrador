@@ -23,6 +23,6 @@ export default class Product {
         return await ProductModel.deleteOne({_id: id})
     }
     updateProduct = async(id, product) => {
-        return await ProductModel.findByIdAndUpdate(id, product)
+        return await ProductModel.findByIdAndUpdate(id, product, { new: true })
     }
 }

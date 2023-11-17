@@ -8,7 +8,8 @@ const productSchema = new mongoose.Schema({
     price: Number,
     photo: String,
     id: Number,
-    quantity: Number
+    quantity: Number,
+    owner: String
 })
 
 productSchema.plugin(mongoosePaginate);

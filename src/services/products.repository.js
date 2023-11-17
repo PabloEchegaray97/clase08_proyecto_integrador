@@ -41,4 +41,18 @@ export default class ProductRepository {
     deleteProduct = async (id) => {
         return await this.dao.deleteProduct(id)
     }
+    productOwner = async (product, method, newProduct, userId) => {
+        //const update = { ...newProduct, owner: userId };
+        const createProductData = (method === 'create' || method === 'update') ? { ...newProduct, owner: userId, _id: undefined } : { ...newProduct, owner: userId };
+        const isOwner = product.owner == userId;
+        console.log(isOwner);
+        if (method=='delete' && isOwner) {
+            return await this.dao.deleteProduct(product._id)
+        } else if (method=='update' && isOwner) {
+            return await this.dao.updateProduct(product._id, createProductData)
+        } else if (method == 'create') {
+            return await this.dao.createProduct(createProductData)
+        }
+        return null
+    }
 }
