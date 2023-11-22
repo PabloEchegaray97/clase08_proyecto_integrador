@@ -27,6 +27,11 @@ import mockingRouter from './routes/mocking.router.js'
 import errorHandler from './middlewares/error.js'
 //
 import { addLogger } from './middlewares/logger.js';
+//
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express'
+
+
 
 const app = express();
 app.use(addLogger)
@@ -69,13 +74,29 @@ app.use(cookieParser())
 
 app.io = io;
 //
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.1',
+    info: {
+      title: 'Documentation of my_ecommerce ',
+      description: 'lorem ipsum dolor ...'
+    }
+  },
+    apis: [`${__dirname}/src/../docs/**/*.yaml`]
+  }
+
+const specs = swaggerJSDoc(swaggerOptions)
+
+console.log(specs);
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+//
 
 app.use('/product', productRouter);
 
 //tests refactor
 app.use('/userstest', usersRouter)
 app.use('/cartstest', cartsRouter)
-app.use('/test', productsRouter)
+app.use('/products', productsRouter)
 app.use('/chatstest', chatsRouter)
 app.use('/ticket', tickesRouter)
 
